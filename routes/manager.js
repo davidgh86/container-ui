@@ -1,7 +1,7 @@
 var express = require('express');
 const { exec } = require("child_process");
 const fs = require('fs')
-import { v4 as uuidv4 } from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 var router = express.Router();
 
 function getContainerName(owner) {
