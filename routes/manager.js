@@ -49,7 +49,7 @@ router.post('/logs', function(req, res, next) {
   let owner = req.body.owner;
   let containerName = getContainerName(owner)
   let uuid = uuidv4()
-  let command = `docker logs ${containerName} > ${process.env.LOG_PATH}/${uuid}.txt`;
+  let command = `docker logs ${containerName} 2>&1 | cat > ${process.env.LOG_PATH}/${uuid}.txt`;
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
