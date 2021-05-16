@@ -62,13 +62,7 @@ router.post('/logs', function(req, res, next) {
         }
       });
     } else {
-      fs.readFile(`${process.env.LOG_PATH}/${uuid}.txt`, 'utf8', (err, data) => {
-        if (err) {
-          res.render('../views/error', { error: err });
-        } else {
-          res.render('../views/logs', {owner: owner, log: data})
-        }
-      })
+      res.render('../views/logs', {owner: owner, logFile: `${uuid}.txt`})
     }
   });
 });
