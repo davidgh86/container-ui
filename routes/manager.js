@@ -11,7 +11,7 @@ function getContainerName(owner) {
   }else if("alberto"==owner){
     containerName = "contenedor_divergencias_alberto"
   }
-  return "colour-front-container";
+  return containerName;
 }
 
 /* Shows status */
