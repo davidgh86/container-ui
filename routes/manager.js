@@ -1,5 +1,7 @@
 var express = require('express');
 const { exec } = require("child_process");
+const fs = require('fs')
+import { v4 as uuidv4 } from 'uuid';
 var router = express.Router();
 
 function getContainerName(owner) {
@@ -9,7 +11,7 @@ function getContainerName(owner) {
   }else if("alberto"==owner){
     containerName = "contenedor_divergencias_alberto"
   }
-  return containerName;
+  return "colour-front-container";
 }
 
 /* Shows status */
@@ -46,7 +48,8 @@ router.post('/restart', function(req, res, next) {
 router.post('/logs', function(req, res, next) {
   let owner = req.body.owner;
   let containerName = getContainerName(owner)
-  let command = `docker logs ${containerName} 2>&1 | cat`;
+  let uuid = uuidv4()
+  let command = `docker logs ${containerName} > ${process.env.LOG_PATH}/${uuid}.txt`;
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
@@ -59,7 +62,13 @@ router.post('/logs', function(req, res, next) {
         }
       });
     } else {
-      res.render('../views/logs', {owner: owner, log: stdout})
+      fs.readFile(`${process.env.LOG_PATH}/${uuid}.txt`, 'utf8', (err, data) => {
+        if (err) {
+          res.render('../views/error', { error: err });
+        } else {
+          res.render('../views/logs', {owner: owner, log: data})
+        }
+      })
     }
   });
 });
