@@ -1,2 +1,4 @@
 node_modules/
 app.log
+logs/*
+!logs/readme.md
