@@ -1,0 +1,12 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>Gestor de contenedores</h1>
+  <form action="/manager" method="post">
+    <input type="radio" id="alberto" name="owner" value="alberto">
+    <label for="male">Alberto</label><br>
+    <input type="radio" id="david" name="owner" value="david">
+    <label for="female">David</label><br>
+    <input type="submit" value="Gestionar" />
+  </form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>Gestión de contenedor de {{owner}}</h1>
+  <p>
+    <h2>{{status}}</h2>
+  </p>
+  <p>
+  <form action="/manager/stop" method="post">
+    <input name="owner" type="hidden" value="{{owner}}">
+    <input type="submit" value="STOP" />
+  </form>
+  <form action="/manager/start" method="post">
+    <input name="owner" type="hidden" value="{{owner}}">
+    <input type="submit" value="START" />
+  </form>
+  <form action="/manager/restart" method="post">
+    <input name="owner" type="hidden" value="{{owner}}">
+    <input type="submit" value="RESTART" />
+  </form>
+  <form action="/manager/logs" method="post">
+    <input name="owner" type="hidden" value="{{owner}}">
+    <input type="submit" value="LOGS" />
+  </form>
+  </p>
+  <p>
+    <a href="/">Ir a selección de usuario</a>
+  </p>
+{% endblock %}
