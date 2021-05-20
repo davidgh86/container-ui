@@ -3,10 +3,10 @@
 {% block body %}
   <h1>Gestor de contenedores</h1>
   <form action="/manager" method="post">
-    <input type="radio" id="alberto" name="owner" value="alberto">
-    <label for="male">Alberto</label><br>
-    <input type="radio" id="david" name="owner" value="david">
-    <label for="female">David</label><br>
+    {% for container in containers %}
+      <input type="radio" id="{{ container.key }}Id" name="owner" value="{{ container.key }}">
+      <label for="{{ container.key }}Id">{{ container.description }}</label><br>
+    {% endfor %}
     <input type="submit" value="Gestionar" />
   </form>
 {% endblock %}

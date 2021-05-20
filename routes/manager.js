@@ -4,13 +4,13 @@ const fs = require('fs')
 const { v4: uuidv4 } = require('uuid');
 var router = express.Router();
 
+const constants = require('./containerList')
+
 function getContainerName(owner) {
-  let containerName
-  if ("david"==owner){
-    containerName = "contenedor_divergencias_david"
-  }else if("alberto"==owner){
-    containerName = "contenedor_divergencias_alberto"
-  }
+  let container = constants.CONTAINERS.find(function (item) {
+    return item.key === owner
+  })
+  let containerName = container.container
   return containerName;
 }
 
