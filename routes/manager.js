@@ -11,6 +11,7 @@ function getContainerName(owner) {
     return item.key === owner
   })
   let containerName = container.container
+  console.log(containerName)
   return containerName;
 }
 
@@ -68,6 +69,7 @@ router.post('/logs', function(req, res, next) {
 });
 
 function executeCommand(command, owner, res, callback) {
+  
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
@@ -87,7 +89,7 @@ function executeCommand(command, owner, res, callback) {
 
 function getStatusAndRedirect(owner, res) {
   let containerName = getContainerName(owner);
-  let command = `docker ps --filter \"name=${containerName}\" --format \"{{.Status}}\"`;
+  let command = `docker ps --filter \"name=^/${containerName}$\" --format \"{{.Status}}\"`;
 
   exec(command, (error, stdout, stderr) => {
     let status = "Status: ";
@@ -117,5 +119,3 @@ function getStatusAndRedirect(owner, res) {
 }
 
 module.exports = router;
-
-
