@@ -53,7 +53,7 @@ router.post('/logs', function(req, res, next) {
   let owner = req.body.owner;
   let containerName = getContainerName(owner)
   let uuid = uuidv4()
-  let command = `docker logs ${containerName} 2>&1 | cat > ${process.env.LOG_PATH}/${uuid}.txt`;
+  let command = `docker logs ${containerName} 2>&1 | cat > ${process.env.LOG_PATH}/${owner}_${uuid}.txt`;
   
   exec(command, (error, stdout, stderr) => {
     if (error) {
@@ -68,7 +68,7 @@ router.post('/logs', function(req, res, next) {
       });
     } else {
       let containerDescription = getContainerDescription(owner)
-      res.render('../views/logs', {containerDescription: containerDescription, logFile: `${uuid}.txt`})
+      res.render('../views/logs', {containerDescription: containerDescription, logFile: `${owner}_${uuid}.txt`})
     }
   });
 });
