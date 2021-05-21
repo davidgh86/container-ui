@@ -126,6 +126,7 @@ function getStatusAndRedirect(owner, res) {
       res.render('../views/status',
         {
           status: status,
+          owner: owner,
           containerDescription: containerDescription
         });
       }
