@@ -1,2 +1,5 @@
 #!/bin/bash
-nohup npm start > app.log 2>&1 &
+sudo systemctl stop gestion_contenedores
+sudo systemctl start gestion_contenedores
+sudo systemctl daemon-reload gestion_contenedores
+sudo nano /lib/systemd/system/gestion_contenedores.service
