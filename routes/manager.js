@@ -7,12 +7,15 @@ var router = express.Router();
 const constants = require('./containerList')
 
 function getContainerName(owner) {
-  let container = constants.CONTAINERS.find(function (item) {
-    return item.key === owner
-  })
+  let container = findContainerByOwner(owner)
   let containerName = container.container
-  console.log(containerName)
   return containerName;
+}
+
+function getContainerDescription(owner) {
+  let container = findContainerByOwner(owner)
+  let containerDescription = container.description
+  return containerDescription;
 }
 
 /* Shows status */
@@ -63,10 +66,17 @@ router.post('/logs', function(req, res, next) {
         }
       });
     } else {
-      res.render('../views/logs', {owner: owner, logFile: `${uuid}.txt`})
+      let containerDescription = getContainerDescription(owner)
+      res.render('../views/logs', {containerDescription: containerDescription, logFile: `${uuid}.txt`})
     }
   });
 });
+
+function findContainerByOwner(owner) {
+  return constants.CONTAINERS.find(function (item) {
+    return item.key === owner;
+  });
+}
 
 function executeCommand(command, owner, res, callback) {
   
@@ -109,10 +119,11 @@ function getStatusAndRedirect(owner, res) {
       } else {
         status += stdout;
       }
+      let containerDescription = getContainerDescription(owner)
       res.render('../views/status',
         {
           status: status,
-          owner: owner
+          containerDescription: containerDescription
         });
       }
   });
