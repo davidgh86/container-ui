@@ -51,9 +51,12 @@ router.post('/restart', function(req, res, next) {
 /* restart and show status */
 router.post('/logs', function(req, res, next) {
   let owner = req.body.owner;
+  console.log("owner: " + owner)
   let containerName = getContainerName(owner)
+  console.log("container name: "+containerName)
   let uuid = uuidv4()
   let command = `docker logs ${containerName} 2>&1 | cat > ${process.env.LOG_PATH}/${uuid}.txt`;
+  console.log("Comand: "+command)
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
